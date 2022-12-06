@@ -43,5 +43,11 @@ def gauss_func(Q,u,dir1,x,y,z,xs,ys,H,Dy,Dz,STABILITY):
        * np.exp(-crosswind[ind]**2./(2.*sig_y[ind]**2.))  \
        *(np.exp(-(z[ind]-H)**2./(2.*sig_z[ind]**2.)) + \
        np.exp(-(z[ind]+H)**2./(2.*sig_z[ind]**2.)) )
+   
+   for i in range(len(x)):
+    for j in range(len(y)):
+        if C[i][j]<1e-6:
+            
+            C[i][j]="Nan"
    return C
    
