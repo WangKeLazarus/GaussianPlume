@@ -133,7 +133,7 @@ else:
 # Set the wind based on input flags++++++++++++++++++++++++++++++++++++++++
 wind_speed=5.*np.ones((days*24,1))  # m/s
 if wind == CONSTANT_WIND:
-   wind_dir=0.*np.ones((days*24,1)) 
+   wind_dir=220.*np.ones((days*24,1)) 
    wind_dir_str='Constant wind' 
 elif wind == FLUCTUATING_WIND:
    wind_dir=360.*np.random.rand(days*24,1) 
@@ -161,7 +161,8 @@ for i in tqdm.tqdm(range(0,len(wind_dir))):
             stack_x[j],stack_y[j],H[j],Dy,Dz,stability[i]) 
         C1[:,:,i]=C1[:,:,i]+C 
 
-
+#conversion between mg/m3 and ppb for methane
+C1=C1*1.826
 
 
 # SECTION 4: Post process / output
@@ -204,7 +205,7 @@ elif output == HEIGHT_SLICE:
    plt.ion()
    
    plt.pcolor(y,z,np.mean(C1,axis=2)*1e6, cmap='jet')      
-   plt.clim((0,1e2)) 
+   plt.clim((0,1e3)) 
    plt.xlabel('y (metres)') 
    plt.ylabel('z (metres)') 
    plt.title(stability_str + '\n' + wind_dir_str) 
