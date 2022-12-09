@@ -60,7 +60,7 @@ Mw=16e-3 # Molecular weight
 
 dxy=100           # resolution of the model in both x and y directions
 dz=10 
-x=np.mgrid[-27000:27000+dxy:dxy]  # solve on a 5 km domain
+x=np.mgrid[0:27000+dxy:dxy]  # solve on a 5 km domain
 y=x               # x-grid is same as y-grid
 ###########################################################################
 
