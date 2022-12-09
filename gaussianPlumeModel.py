@@ -101,7 +101,7 @@ Dz=10.
 # SECTION 2: Act on the configuration information
 
 # Decide which stability profile to use
-if stability_used == CONSTANT_STABILITY:
+if stability_used == ANNUAL_CYCLE:
    
    stability=stab1*np.ones((days*24,1)) 
    stability_str=stability_str[stab1-1] 
