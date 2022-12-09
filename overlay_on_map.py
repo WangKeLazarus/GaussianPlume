@@ -7,7 +7,7 @@ def overlay_on_map():
 
     # Overlay concentrations on map
     plt.ion()
-    mat_contents = sio.loadmat('map') # We should upload our own map for the map_green_lane.mat file
+    mat_contents = sio.loadmat('map') # We should upload our own map for the map.mat file
     plt.figure()
     plt.imshow(mat_contents['A'], \
        extent=[np.min(mat_contents['ximage']), \

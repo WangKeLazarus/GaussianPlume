@@ -101,7 +101,7 @@ Dz=10.
 # SECTION 2: Act on the configuration information
 
 # Decide which stability profile to use
-if stability_used == ANNUAL_CYCLE:
+if stability_used == CONSTANT_STABILITY:
    
    stability=stab1*np.ones((days*24,1)) 
    stability_str=stability_str[stab1-1] 
@@ -162,7 +162,7 @@ for i in tqdm.tqdm(range(0,len(wind_dir))):
         C=gauss_func(Q[j],wind_speed[i],wind_dir[i],x,y,z,
             stack_x[j],stack_y[j],H[j],Dy,Dz,stability[i]) 
         C1[:,:,i]=C1[:,:,i]+C 
-
+      
 
 
 
@@ -183,7 +183,7 @@ else:
 
 #conversion between mg/m3 and ppb for methane
 C1=C1*1.826
-
+print(C1)  
 
 # output the plots
 if output == PLAN_VIEW:
@@ -199,8 +199,10 @@ if output == PLAN_VIEW:
    cb1=plt.colorbar() 
    cb1.set_label('ppb') 
    plt.show(block=False)
+   plt.savefig('PLAN_VIEW.pdf')
    plt.pause(0)
    plt.close()
+
 
 elif output == HEIGHT_SLICE:
    plt.figure() 
@@ -214,6 +216,7 @@ elif output == HEIGHT_SLICE:
    cb1=plt.colorbar() 
    cb1.set_label('$m$ g m$^{-3}$') 
    plt.show()
+   plt.savefig('HEIGHT_SLICE.pdf')
 
 elif output == SURFACE_TIME:
    f,(ax1, ax2) = plt.subplots(2, sharex=True, sharey=False)
@@ -232,6 +235,7 @@ elif output == SURFACE_TIME:
    ax2.set_xlabel('time (days)') 
    ax2.set_ylabel('Stability parameter') 
    f.show()
+   f.savefig('SURFACE_TIME.pdf')
    
 elif output == NO_PLOT:
    print('Don''t plot') 
