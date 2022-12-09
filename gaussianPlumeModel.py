@@ -60,7 +60,7 @@ Mw=16e-3 # Molecular weight
 
 dxy=100           # resolution of the model in both x and y directions
 dz=10 
-x=np.mgrid[-2500:2500+dxy:dxy]  # solve on a 5 km domain
+x=np.mgrid[-27000:27000+dxy:dxy]  # solve on a 5 km domain
 y=x               # x-grid is same as y-grid
 ###########################################################################
 
@@ -87,8 +87,8 @@ stacks=ONE_STACK
 stack_x=[0., 1000., -200.] 
 stack_y=[0., 250., -500.] 
 
-Q=[40., 40., 40.]  # mass emitted per unit time # need more study
-H=[50., 50., 50.]  # stack height, m # on the surface, set to be zero
+Q=[21.9444, 40., 40.]  # mass emitted per unit time # need more study
+H=[0., 50., 50.]  # stack height, m # on the surface, set to be zero
 days=50           # run the model for 365 days Or we can sutdy the short-term impact
 #--------------------------------------------------------------------------
 times=np.mgrid[1:(days)*24+1:1]/24. 
@@ -133,7 +133,7 @@ else:
 # Set the wind based on input flags++++++++++++++++++++++++++++++++++++++++
 wind_speed=5.*np.ones((days*24,1))  # m/s
 if wind == CONSTANT_WIND:
-   wind_dir=220.*np.ones((days*24,1)) 
+   wind_dir=198.4349*np.ones((days*24,1)) 
    wind_dir_str='Constant wind' 
 elif wind == FLUCTUATING_WIND:
    wind_dir=360.*np.random.rand(days*24,1) 
