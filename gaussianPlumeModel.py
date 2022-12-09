@@ -82,13 +82,13 @@ output=PLAN_VIEW
 x_slice=26  # position (1-50) to take the slice in the x-direction
 y_slice=1   # position (1-50) to plot concentrations vs time
 
-wind=PREVAILING_WIND 
+wind=CONSTANT_WIND 
 stacks=ONE_STACK 
 stack_x=[0., 1000., -200.] 
 stack_y=[0., 250., -500.] 
 
 Q=[21.9444, 40., 40.]  # mass emitted per unit time # need more study
-H=[0., 50., 50.]  # stack height, m # on the surface, set to be zero
+H=[10., 50., 50.]  # stack height, m # on the surface, set to be zero
 days=50           # run the model for 365 days Or we can sutdy the short-term impact
 #--------------------------------------------------------------------------
 times=np.mgrid[1:(days)*24+1:1]/24. 
@@ -131,7 +131,7 @@ else:
 
 
 # Set the wind based on input flags++++++++++++++++++++++++++++++++++++++++
-wind_speed=5.*np.ones((days*24,1))  # m/s
+wind_speed=2.7*np.ones((days*24,1))  # m/s
 if wind == CONSTANT_WIND:
    wind_dir=198.4349*np.ones((days*24,1)) 
    wind_dir_str='Constant wind' 
