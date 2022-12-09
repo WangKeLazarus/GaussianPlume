@@ -48,20 +48,22 @@ stability_str=['Very unstable','Moderately unstable','Slightly unstable', \
 HUMIDIFY=2  # We sutudy from the sea surface, so we are supposed to set the humidify condition
 DRY_AEROSOL=1 
 
-METHANE=1   #CH4
-SULPHURIC_ACID=2    #H2SO4
-ORGANIC_ACID=3      
-AMMONIUM_NITRATE=4  #NH4NO3
-nu=[1., 2.5, 1., 2.] # Amount of substance
-rho_s=[0.657, 1840., 1500., 1725.] # Density
-Ms=[16.04e-3, 98e-3, 200e-3, 80e-3] # Atomic weight
-Mw=16e-3 # Molecular weight
+SODIUM_CHLORIDE=0   #NaCl
+SULPHURIC_ACID=1   #H2SO4
+ORGANIC_ACID=2      
+AMMONIUM_NITRATE=3  #NH4NO3
+METHANE=4      #CH4
+
+nu=[2., 2.5, 1., 2.,2.] 
+rho_s=[2160., 1840., 1500., 1725., 0.657] 
+Ms=[58.44e-3, 98e-3, 200e-3, 80e-3, 16.04e-3] 
+Mw=18e-3 
 
 
 dxy=100           # resolution of the model in both x and y directions
-dz=10 
-x=np.mgrid[0:27000+dxy:dxy]  # solve on a 5 km domain
-y=x               # x-grid is same as y-grid
+dz=10
+x=np.mgrid[0:27000+dxy:dxy]  # solve on a 50 km domain
+y=np.mgrid[0:27000+dxy:dxy]              # x-grid is same as y-grid
 ###########################################################################
 
 
@@ -69,27 +71,27 @@ y=x               # x-grid is same as y-grid
 # SECTION 1: Configuration
 # Variables can be changed by the user+++++++++++++++++++++++++++++++++++++
 RH=0.90 
-aerosol_type=METHANE
+aerosol_type=METHANE 
 
 dry_size=60e-9 
-humidify=DRY_AEROSOL 
+humidify=HUMIDIFY
 
-stab1=1  # set from 1-6
+stab1=3# set from 1-6
 stability_used=CONSTANT_STABILITY 
 
-
+#output options: HEIGHT_SLICE  SURFACE_TIME PLAN_VIEW 
 output=PLAN_VIEW 
 x_slice=26  # position (1-50) to take the slice in the x-direction
 y_slice=1   # position (1-50) to plot concentrations vs time
 
-wind=CONSTANT_WIND 
+wind=CONSTANT_WIND
 stacks=ONE_STACK 
 stack_x=[0., 1000., -200.] 
 stack_y=[0., 250., -500.] 
 
-Q=[21.9444, 40., 40.]  # mass emitted per unit time # need more study
-H=[10., 50., 50.]  # stack height, m # on the surface, set to be zero
-days=50           # run the model for 365 days Or we can sutdy the short-term impact
+Q=[21.9, 0., 0.]  # mass emitted per unit time # need more study
+H=[10., 0., 0.]  # stack height, m # on the surface, set to be zero
+days=4          # run the model for 365 days Or we can sutdy the short-term impact
 #--------------------------------------------------------------------------
 times=np.mgrid[1:(days)*24+1:1]/24. 
 
@@ -161,8 +163,7 @@ for i in tqdm.tqdm(range(0,len(wind_dir))):
             stack_x[j],stack_y[j],H[j],Dy,Dz,stability[i]) 
         C1[:,:,i]=C1[:,:,i]+C 
 
-#conversion between mg/m3 and ppb for methane
-C1=C1*1.826
+
 
 
 # SECTION 4: Post process / output
@@ -180,8 +181,8 @@ elif humidify == HUMIDIFY:
 else:
    sys.exit()
 
-
-
+#conversion between mg/m3 and ppb for methane
+C1=C1*1.826
 
 
 # output the plots
@@ -190,12 +191,13 @@ if output == PLAN_VIEW:
    plt.ion()
    
    plt.pcolor(x,y,np.mean(C1,axis=2)*1e6, cmap='jet') 
-   plt.clim((0, 1e2)) 
-   plt.title(stability_str + '\n' + wind_dir_str) 
+   plt.clim((0, 1e3)) 
+   
+   plt.title("Concentration of methane near the leak") 
    plt.xlabel('x (metres)') 
    plt.ylabel('y (metres)') 
    cb1=plt.colorbar() 
-   cb1.set_label('$m$ g m$^{-3}$') 
+   cb1.set_label('ppb') 
    plt.show(block=False)
    plt.pause(0)
    plt.close()
@@ -205,7 +207,7 @@ elif output == HEIGHT_SLICE:
    plt.ion()
    
    plt.pcolor(y,z,np.mean(C1,axis=2)*1e6, cmap='jet')      
-   plt.clim((0,1e3)) 
+   plt.clim((0,1e2)) 
    plt.xlabel('y (metres)') 
    plt.ylabel('z (metres)') 
    plt.title(stability_str + '\n' + wind_dir_str) 
