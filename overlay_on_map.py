@@ -9,11 +9,7 @@ def overlay_on_map():
     plt.ion()
     mat_contents = sio.loadmat('map') # We should upload our own map for the map.mat file
     plt.figure()
-    plt.imshow(mat_contents['A'], \
-       extent=[np.min(mat_contents['ximage']), \
-               np.max(mat_contents['ximage']), \
-               np.min(mat_contents['yimage']), \
-               np.max(mat_contents['yimage'])])
+    plt.imshow(mat_contents['M'])
                
     plt.xlabel('x (m)') 
     plt.ylabel('y (m)') 

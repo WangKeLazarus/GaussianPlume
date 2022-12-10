@@ -183,7 +183,6 @@ else:
 
 #conversion between mg/m3 and ppb for methane
 C1=C1*1.826
-print(C1)  
 
 # output the plots
 if output == PLAN_VIEW:
